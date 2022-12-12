@@ -1,5 +1,11 @@
 import requests
 
+from bs4 import BeautifulSoup
+
+url = "https://www.imdb.com/"
+
+get = requests.get(url)
+print(get.status_code)
 def getMovieByTitle(searchParam):
     url = "https://imdb8.p.rapidapi.com/title/find"
     querystring = {"q": searchParam}
