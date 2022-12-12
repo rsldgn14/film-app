@@ -1,14 +1,15 @@
+import http
+
 import requests
 
-def getMovieByTitle(searchParam):
-    url = "https://imdb8.p.rapidapi.com/title/find"
-    querystring = {"q": searchParam}
-    headers = {
-        "X-RapidAPI-Key": "d19d3d8e07mshc2083cb18c1ab08p1b7266jsn2516f359fd7f",
-        "X-RapidAPI-Host": "imdb8.p.rapidapi.com"
-    }
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    title = response.json()
-    movies = title["results"]
 
-    return movies
+def getMovieByTitle(movie_name):
+    conn = http.client.HTTPSConnection("api.collectapi.com")
+    headers = {
+        'content-type': "application/json",
+        'authorization': "apikey 5pWpfXTRw5xZrlq8cjR3zT:5RqnoOUDpWOuusOCLfFeuW"
+    }
+    conn.request("GET", f"/imdb/imdbSearchByName?query={movie_name}", headers=headers)
+    res = conn.getresponse()
+    data = res.read()
+    return data
