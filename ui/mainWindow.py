@@ -69,6 +69,7 @@ class Ui_MainWindow(object):
         self.imageContainer.setStyleSheet("background-color:white;\n"
 "border:1px solid;")
         self.imageContainer.setText("")
+        self.imageContainer.setAlignment(QtCore.Qt.AlignCenter)
         self.imageContainer.setObjectName("imageContainer")
         self.verticalLayout_2.addWidget(self.imageContainer)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
