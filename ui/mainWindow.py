@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/emree/OneDrive/Masaüstü/tasarımlar/uiler/mainWindow.ui'
+# Form implementation generated from reading ui file 'C:/Users/EGE/Downloads/mainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -45,6 +45,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.searchButton)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.filmList = QtWidgets.QListWidget(self.horizontalLayoutWidget_7)
+        self.filmList.setStyleSheet("")
         self.filmList.setObjectName("filmList")
         self.verticalLayout.addWidget(self.filmList)
         self.horizontalLayout_11.addLayout(self.verticalLayout)
@@ -59,13 +60,17 @@ class Ui_MainWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
-        self.movieImage = QtWidgets.QGraphicsView(self.horizontalLayoutWidget_7)
-        self.movieImage.setObjectName("movieImage")
-        self.verticalLayout_2.addWidget(self.movieImage)
+        self.imageContainer = QtWidgets.QLabel(self.horizontalLayoutWidget_7)
+        self.imageContainer.setMinimumSize(QtCore.QSize(0, 250))
+        self.imageContainer.setStyleSheet("background-color:white;\n"
+"border:1px solid;")
+        self.imageContainer.setText("")
+        self.imageContainer.setObjectName("imageContainer")
+        self.verticalLayout_2.addWidget(self.imageContainer)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.moviNameLabel = QtWidgets.QLabel(self.horizontalLayoutWidget_7)
-        self.moviNameLabel.setMaximumSize(QtCore.QSize(60, 16777215))
+        self.moviNameLabel.setMaximumSize(QtCore.QSize(80, 16777215))
         self.moviNameLabel.setObjectName("moviNameLabel")
         self.horizontalLayout_6.addWidget(self.moviNameLabel)
         self.moviNameText = QtWidgets.QLabel(self.horizontalLayoutWidget_7)
@@ -95,6 +100,17 @@ class Ui_MainWindow(object):
         self.directorText.setObjectName("directorText")
         self.horizontalLayout_8.addWidget(self.directorText)
         self.verticalLayout_2.addLayout(self.horizontalLayout_8)
+        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        self.yearLabel = QtWidgets.QLabel(self.horizontalLayoutWidget_7)
+        self.yearLabel.setMaximumSize(QtCore.QSize(60, 16777215))
+        self.yearLabel.setObjectName("yearLabel")
+        self.horizontalLayout_12.addWidget(self.yearLabel)
+        self.yearText = QtWidgets.QLabel(self.horizontalLayoutWidget_7)
+        self.yearText.setText("")
+        self.yearText.setObjectName("yearText")
+        self.horizontalLayout_12.addWidget(self.yearText)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_12)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.rateLabel = QtWidgets.QLabel(self.horizontalLayoutWidget_7)
@@ -139,6 +155,10 @@ class Ui_MainWindow(object):
         self.commentList.setObjectName("commentList")
         self.verticalLayout_3.addWidget(self.commentList)
         self.horizontalLayout_11.addLayout(self.verticalLayout_3)
+        self.directorText_2 = QtWidgets.QLabel(self.centralwidget)
+        self.directorText_2.setGeometry(QtCore.QRect(810, 680, 274, 16))
+        self.directorText_2.setText("")
+        self.directorText_2.setObjectName("directorText_2")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -151,9 +171,10 @@ class Ui_MainWindow(object):
         self.searchButton.setText(_translate("MainWindow", "Search"))
         self.label.setText(_translate("MainWindow", "Movie Information"))
         self.moviNameLabel.setText(_translate("MainWindow", "Movie Name:"))
-        self.categoryLabel.setText(_translate("MainWindow", "Category"))
-        self.directorLabel.setText(_translate("MainWindow", "Director"))
-        self.rateLabel.setText(_translate("MainWindow", "Rate"))
+        self.categoryLabel.setText(_translate("MainWindow", "Category:"))
+        self.directorLabel.setText(_translate("MainWindow", "Director:"))
+        self.yearLabel.setText(_translate("MainWindow", "Year:"))
+        self.rateLabel.setText(_translate("MainWindow", "Rate:"))
         self.reviewLabel.setText(_translate("MainWindow", "Review"))
         self.label_3.setText(_translate("MainWindow", "Comments And Rates"))
 
