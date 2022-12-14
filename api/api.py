@@ -14,5 +14,5 @@ def getMovieByTitle(movie_name):
     conn.request("GET", f"/imdb/imdbSearchByName?query={parsed_movie_name}", headers=headers)
     res = conn.getresponse()
     data = res.read().decode("utf-8")
-    res = json.loads(data)
-    return res
+    movie_data = json.loads(data)
+    return movie_data
