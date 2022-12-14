@@ -7,9 +7,10 @@ def get_content(movie):
     res = res["result"]
     content = []
     for i in range(0, len(res)):
-        content.append({"title": res[i]["Title"],
+        content.append({
+                        "id": res[i]["imdbID"],
+                        "title": res[i]["Title"],
                         "year": res[i]["Year"],
-                        "comment": get_comment(res[i]["imdbID"]),
                         "poster": res[i]["Poster"]
                         })
     return content
