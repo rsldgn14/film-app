@@ -1,5 +1,7 @@
 import json
 import urllib
+
+import requests
 import urllib3.util
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow
@@ -34,15 +36,11 @@ class mainWindow(QMainWindow):
             movie_name = self.movie_informations[row]["Title"]
             self.ui.moviNameText.setText(str(movie_name))
         if self.movie_informations[row]["Poster"]:
-            try:
-                image = QImage()
-                photo = self.movie_informations[row]["Poster"]
-                image.loadFromData(self, requests.get(urllib3.util.parse_url(photo)).content)
-                self.ui.imageContainer.setPixmap(QPixmap(image))
-                self.ui.imageContainer.setScaledContents(True)
-            except:
-                photo = self.movie_informations[row]["Poster"]
-                print(urllib3.util.parse_url(photo))
+            photo = self.movie_informations[row]["Poster"]
+            img = QImage()
+            img.loadFromData(requests.get(photo).content)
+            self.ui.imageContainer.setPixmap(QPixmap(img))
+            self.ui.imageContainer.setScaledContents(True)
         else:
             self.ui.imageContainer.setText("No Poster")
         if self.movie_informations[row]["Year"]:
