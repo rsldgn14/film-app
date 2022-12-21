@@ -1,14 +1,9 @@
-import json
-import urllib
-
 import requests
-import urllib3.util
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow
-from api.api import getMovieByTitle
-from utils.utils import unique
+from utils.formatter import get_content
 from ui.mainWindow import Ui_MainWindow
-
+from imdbCrawling.web_crawling import get_comment
 
 class mainWindow(QMainWindow):
 
@@ -22,27 +17,44 @@ class mainWindow(QMainWindow):
 
     def film_ekle(self):
         self.ui.filmList.clear()
+        self.ui.commentList.clear()
+        self.ui.reviewText.clear()
+        self.ui.imageContainer.clear()
+        self.ui.moviNameText.clear()
+        self.ui.yearText.clear()
+        self.ui.categoryText.clear()
+        self.ui.rateText.clear()
+        self.ui.directorText_2.clear()
         movie = self.ui.searchInput.text()
-        res = getMovieByTitle(urllib.parse.quote(movie)).decode("utf-8")
-        res = json.loads(res)
-        self.movie_informations = res["result"]
-        unique(self.movie_informations)
+        self.movie_informations = get_content(movie)
         for mov in self.movie_informations:
-            self.ui.filmList.addItem(mov["Title"])
+            self.ui.filmList.addItem(mov["title"])
 
     def film_getir(self):
+        self.ui.commentList.clear()
         row = int(self.ui.filmList.currentRow())
-        if self.movie_informations[row]["Title"]:
-            movie_name = self.movie_informations[row]["Title"]
+        movie_id = self.movie_informations[row]["id"]
+        if self.movie_informations[row]["title"]:
+            movie_name = self.movie_informations[row]["title"]
             self.ui.moviNameText.setText(str(movie_name))
-        if self.movie_informations[row]["Poster"]:
-            photo = self.movie_informations[row]["Poster"]
-            img = QImage()
-            img.loadFromData(requests.get(photo).content)
-            self.ui.imageContainer.setPixmap(QPixmap(img))
-            self.ui.imageContainer.setScaledContents(True)
-        else:
-            self.ui.imageContainer.setText("No Poster")
-        if self.movie_informations[row]["Year"]:
-            date = self.movie_informations[row]["Year"]
+        if self.movie_informations[row]["poster"]:
+            try:
+                photo = self.movie_informations[row]["poster"]
+                img = QImage()
+                img.loadFromData(requests.get(photo).content)
+                self.ui.imageContainer.setPixmap(QPixmap(img))
+                self.ui.imageContainer.setScaledContents(True)
+            except:
+                print("Fatal error")
+                self.ui.imageContainer.setText("No Poster")
+        if self.movie_informations[row]["year"]:
+            date = self.movie_informations[row]["year"]
             self.ui.yearText.setText(str(date))
+
+        comments = get_comment(movie_id)
+        if comments:
+            try:
+                for comment in comments:
+                    self.ui.commentList.addItem(comment)
+            except:
+                print("no commento")

@@ -1,6 +1,3 @@
-import requests
-
-
 def unique(list1):
     # initialize a null list
     unique_list = []
@@ -11,4 +8,6 @@ def unique(list1):
         if x not in unique_list:
             unique_list.append(x)
     return unique_list
+
+
 
