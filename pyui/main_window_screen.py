@@ -3,7 +3,8 @@ from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow
 from utils.formatter import get_content
 from ui.mainWindow import Ui_MainWindow
-from imdbCrawling.web_crawling import get_comment
+from imdbCrawling.web_crawling import get_comment, get_rate
+
 
 class mainWindow(QMainWindow):
 
@@ -51,10 +52,13 @@ class mainWindow(QMainWindow):
             date = self.movie_informations[row]["year"]
             self.ui.yearText.setText(str(date))
 
+        self.ui.rateText.setText(get_rate(movie_id))
+
         comments = get_comment(movie_id)
         if comments:
             try:
-                for comment in comments:
-                    self.ui.commentList.addItem(comment)
+                for i in range(len(comments)):
+                    self.ui.commentList.addItem(
+                        f"{comments[i]['username']} ----{comments[i]['comment']}----{comments[i]['rate']}")
             except:
                 print("no commento")
