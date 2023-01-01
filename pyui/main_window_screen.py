@@ -19,13 +19,10 @@ class mainWindow(QMainWindow):
     def film_ekle(self):
         self.ui.filmList.clear()
         self.ui.commentList.clear()
-        self.ui.reviewText.clear()
         self.ui.imageContainer.clear()
         self.ui.moviNameText.clear()
         self.ui.yearText.clear()
-        self.ui.categoryText.clear()
         self.ui.rateText.clear()
-        self.ui.directorText_2.clear()
         movie = self.ui.searchInput.text()
         self.movie_informations = get_content(movie)
         for mov in self.movie_informations:
@@ -52,8 +49,10 @@ class mainWindow(QMainWindow):
             date = self.movie_informations[row]["year"]
             self.ui.yearText.setText(str(date))
 
-        self.ui.rateText.setText(get_rate(movie_id))
-
+        try:
+            self.ui.rateText.setText(get_rate(movie_id))
+        except:
+            self.ui.rateText.setText("No Rate")
         comments = get_comment(movie_id)
         if comments:
             try:
