@@ -1,6 +1,6 @@
 # film-app
 
-## Kurulumu gerekli kütüphaneler
+## Kurulumu gerekli kütüphaneler pycharm idesinin altındaki packages bölmesinden kurulmalıdır!!.
 
 ### PYQT5
 
