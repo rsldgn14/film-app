@@ -1,3 +1,5 @@
+import csv
+
 import requests
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow
@@ -15,6 +17,7 @@ class mainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.ui.searchButton.clicked.connect(self.film_ekle)
         self.ui.filmList.clicked.connect(self.film_getir)
+        self.ui.csvButton.clicked.connect(self.export_csv)
 
     def film_ekle(self):
         self.ui.filmList.clear()
@@ -27,17 +30,19 @@ class mainWindow(QMainWindow):
         self.movie_informations = get_content(movie)
         for mov in self.movie_informations:
             self.ui.filmList.addItem(mov["title"])
+        self.comment_informations = []
+        self.row = 0
 
     def film_getir(self):
         self.ui.commentList.clear()
-        row = int(self.ui.filmList.currentRow())
-        movie_id = self.movie_informations[row]["id"]
-        if self.movie_informations[row]["title"]:
-            movie_name = self.movie_informations[row]["title"]
+        self.row = int(self.ui.filmList.currentRow())
+        movie_id = self.movie_informations[self.row]["id"]
+        if self.movie_informations[self.row]["title"]:
+            movie_name = self.movie_informations[self.row]["title"]
             self.ui.moviNameText.setText(str(movie_name))
-        if self.movie_informations[row]["poster"]:
+        if self.movie_informations[self.row]["poster"]:
             try:
-                photo = self.movie_informations[row]["poster"]
+                photo = self.movie_informations[self.row]["poster"]
                 img = QImage()
                 img.loadFromData(requests.get(photo).content)
                 self.ui.imageContainer.setPixmap(QPixmap(img))
@@ -45,8 +50,8 @@ class mainWindow(QMainWindow):
             except:
                 print("Fatal error")
                 self.ui.imageContainer.setText("No Poster")
-        if self.movie_informations[row]["year"]:
-            date = self.movie_informations[row]["year"]
+        if self.movie_informations[self.row]["year"]:
+            date = self.movie_informations[self.row]["year"]
             self.ui.yearText.setText(str(date))
 
         try:
@@ -56,8 +61,20 @@ class mainWindow(QMainWindow):
         comments = get_comment(movie_id)
         if comments:
             try:
+                self.comment_informations = []
                 for i in range(len(comments)):
+                    self.comment_informations = self.comment_informations + [comments[i]['username'],
+                                                                             comments[i]['comment'],
+                                                                             comments[i]['rate']]
                     self.ui.commentList.addItem(
                         f"{comments[i]['username']} ----{comments[i]['comment']}----{comments[i]['rate']}")
             except:
+                self.comment_informations = []
                 print("no commento")
+
+    def export_csv(self):
+        movie_id = self.movie_informations[self.row]["id"]
+        with open('movies.csv', 'a', newline="\n", encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow([self.movie_informations[self.row]["title"], self.movie_informations[self.row]["year"],
+                             get_rate(movie_id), get_comment(movie_id)])

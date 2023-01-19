@@ -1,7 +1,7 @@
 import http
 import urllib
 import json
-import requests
+
 
 
 def getMovieByTitle(movie_name):
